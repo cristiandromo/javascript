@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // ---------------------------------------------------------------
+      // FUNCIONES DE VALIDACION
+      // ---------------------------------------------------------------
+
+      // Pide un numero y NO deja continuar hasta que sea valido:
+      //   - que no sea NaN (texto que no se puede convertir a numero)
+      //   - que sea mayor que 0 (descarta 0 y negativos)
+      function pedirNumero(mensaje) {
+        while (true) {
+          let entrada = prompt(mensaje);
+
+          // Si el usuario cancela, prompt devuelve null.
+          if (entrada === null) {
+            alert('Operacion cancelada. Debe ingresar un numero mayor que 0.');
+            continue;
+          }
+
+          let numero = Number(entrada);
+
+          // isNaN(numero) es true cuando la conversion no dio un numero.
+          // numero <= 0 descarta el cero y los negativos.
+          if (isNaN(numero) || numero <= 0) {
+            alert('Valor invalido: debe ser un numero mayor que 0.');
+            continue;
+          }
+
+          return numero; // numero valido, salimos de la funcion
+        }
+      }
+
+      // Pide SI o NO y repite hasta obtener una respuesta valida.
+      // Devuelve true para "si" y false para "no".
+      function preguntarSiNo(mensaje) {
+        while (true) {
+          let respuesta = prompt(mensaje);
+
+          if (respuesta === null) {
+            alert('Respuesta cancelada. Escriba SI o NO.');
+            continue;
+          }
+
+          // Normalizo: quito espacios y paso a minusculas
+          // para aceptar "si", "SI", "Si ", etc.
+          respuesta = respuesta.trim().toLowerCase();
+
+          if (respuesta === 'si') return true;
+          if (respuesta === 'no') return false;
+
+          alert('Respuesta invalida: escriba SI o NO.');
+        }
+      }
+
+      // ---------------------------------------------------------------
+      // PROGRAMA PRINCIPAL
+      // ---------------------------------------------------------------
+
+      // "total" vive fuera del bucle para acumular toda la compra.
+      let total = 0;
+      // Bandera que controla cuando termina el programa.
+      let terminar = false;
+
+      while (!terminar) {
+        let opcion = prompt(
+          'Eliga un producto \n 1. para hamburguesa \n 2. para pizza \n 3. para terminar',
+        );
+
+        // Si el usuario cancela el menu, terminamos la compra.
+        if (opcion === null) {
+          terminar = true;
+          continue;
+        }
+
+        opcion = opcion.trim().toLowerCase();
+
+        if (opcion == 1) {
+          // pedirNumero ya garantiza un numero > 0 y distinto de NaN.
+          let unidades = pedirNumero('cuantas unidades de hamburguesa desea comprar?');
+          let cuenta = unidades * 20000; // hamburguesa a 20000
+
+          if (preguntarSiNo('desea incluir refresco? SI/NO')) {
+            let ref = pedirNumero('cuantos refrescos desea llevar?');
+            cuenta = cuenta + ref * 4000; // refresco a 4000
+          }
+
+          total = total + cuenta; // acumulo al total general
+          alert('Subtotal hamburguesas: ' + cuenta);
+        } else if (opcion == 2) {
+          let unidades = pedirNumero('cuantas unidades de pizza desea comprar?');
+          let cuenta = unidades * 30000; // pizza a 30000
+
+          total = total + cuenta; // acumulo al total general
+          alert('Subtotal pizzas: ' + cuenta);
+        } else if (opcion == 3 || opcion === 'salir') {
+          terminar = true; // salimos del bucle
+        } else {
+          alert('opcion no valida');
+        }
+      }
+
+      // Al salir del bucle mostramos el resultado final.
+      alert('gracias por su compra.');
+      console.log('el total de la compra es ' + total);
+    </script>
+  </body>
+</html>

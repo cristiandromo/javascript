@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>helados</title>
+  </head>
+  <body>
+    <script>
+      const helado = {};
+      const pedidos = [];
+      let sabor = prompt('¿Vainilla o chocolate?');
+      let tamaño = prompt('¿Grande o pequeño?');
+      let adicion = prompt('vainilla o chantilli?');
+
+      function crearHelado(sabor, tamaño, adicion) {
+        let nuevoHelado = {
+          sabor: sabor,
+          tamaño: tamaño,
+          adicion: adicion,
+        };
+        registrarHelado(nuevoHelado);
+      }
+
+      function registrarHelado(nuevoHelado) {
+        pedidos.push(nuevoHelado);
+      }
+      function mostrarPedidos() {
+        console.log(pedidos);
+      }
+
+      function editarHelado() {}
+      function eliminarHelado() {}
+
+      crearHelado(sabor, tamaño, adicion);
+      mostrarPedidos();
+    </script>
+  </body>
+</html>
